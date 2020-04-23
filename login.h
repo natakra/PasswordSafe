@@ -20,6 +20,8 @@ class Login : public QMainWindow
 public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
+    QString username;
+
 
 
 private slots:

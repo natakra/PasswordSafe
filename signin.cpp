@@ -38,7 +38,7 @@ void signin::on_pushButton_clicked()
 
     else{
         bool ok = qry.exec("select 1 from users where username='"+username+"'");
-        qDebug()<<ok;
+        //qDebug()<<ok;
         if(ok && qry.next())
         {
             QMessageBox::warning(this,"Sign in","Your username is already used. Try another one");

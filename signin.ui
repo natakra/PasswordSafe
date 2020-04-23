@@ -75,7 +75,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Register</string>
   </property>
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">

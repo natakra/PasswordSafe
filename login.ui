@@ -989,7 +989,7 @@ QPushButton#pushButton_2 {
         </font>
        </property>
        <property name="text">
-        <string>version 0.0.5</string>
+        <string>version 0.0.9</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

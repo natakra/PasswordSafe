@@ -2,6 +2,7 @@
 #include "ui_login.h"
 #include <QDesktopWidget>
 #include <QMainWindow>
+#include <QDir>
 
 
 Login::Login(QWidget *parent) :
@@ -10,16 +11,31 @@ Login::Login(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QString gdziejestem= QDir::currentPath();
+    //if (~QDir(gdziejestem+"/users").exists())
+        //QDir().mkdir(gdziejestem+"/users");
+    QString str = "allusers.db";
+    //QString gdziejestem= QDir::currentPath();
+    //QString path = "/home/nkrauze/sqlite_DB/users/"+str+".db";
+    QString path = gdziejestem+"/users/"+str;
     mydb = QSqlDatabase::addDatabase("QSQLITE");
-    mydb.setDatabaseName("/home/nkrauze/sqlite_DB/database.db");
-
+    //mydb.setDatabaseName("/home/nkrauze/sqlite_DB/database.db");
+    //QString path = QDir::currentPath()+"/"+"data.db";
+    qDebug()<<path;
+    mydb.setDatabaseName(path);
+    mydb.open();
     if(!mydb.open())
         //ui->label->setText("Failed to open database.");
         QMessageBox::warning(this,"Database","Database failed to connect. Try once again");
    // else
         //ui->label->setText("Your database is connected.");
         //QMessageBox::information(this,"Database","Database was successfully connected.");
-
+    QSqlQuery query;
+    query.exec("create table users "
+              "(id integer primary key, "
+              "username varchar(100), "
+              "password varchar(100), "
+              "date varchar(128))");
 }
 
 Login::~Login()
@@ -29,7 +45,8 @@ Login::~Login()
 
 void Login::on_pushButton_clicked()
 {
-    QString username, password;
+    //QString username, password;
+    QString password;
     username = ui->lineEdit_username->text();
     password = ui->lineEdit_password->text();
 
@@ -52,13 +69,9 @@ void Login::on_pushButton_clicked()
             //ui->label->setText("correct");
             hide();
             secDialog = new SecDialog(this);
-            QDesktopWidget dw;
-            double x=dw.width()*0.5;
-            double y=dw.height()*0.5;
-            int xw = static_cast<int>(x);
-            int yw = static_cast<int>(y);
-            secDialog->setFixedSize(xw,yw);
+            secDialog->setLabelText(username);
             secDialog->show();
+            secDialog->on_table();
         }
         if(count<1)
             //ui->label->setText("not correct");
@@ -66,22 +79,14 @@ void Login::on_pushButton_clicked()
         if(count>1)
             QMessageBox::warning(this,"Login","Your username and password are the same. Try once again.");
     }
-    else qDebug()<<"not working!";
+    else
+        qDebug()<<"not working!";
 }
 
 void Login::on_pushButton_2_clicked()
 {
-    //QSqlDatabase::removeDatabase("mydb");
     hide();
     Signin = new signin(this);
-//    QDesktopWidget dw;
-//    double x=dw.width()*0.5;
-//    double y=dw.height()*0.5;
-//    int xw = static_cast<int>(x);
-//    int yw = static_cast<int>(y);
-
-//    Signin->setFixedSize(xw,yw);
     Signin->show();
-
 
 }
