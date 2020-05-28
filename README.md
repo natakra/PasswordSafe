@@ -26,7 +26,7 @@ Do zaimplementowania zostało jeszcze kilka funkcjonalności oraz należy doprac
 * Przypominanie zapominanego hasła.
 * Zabezpieczenie baz danych znajdujących się w plikach projektu.
 
-#Raport 3 (28.05.2020)
+# Raport 3 (28.05.2020)
 
 Od ostatniego raportu dodałam możliwość przypomnienia hasła do swojego konta. Zmieniłam szatę graficzną, aby każde okno wyglądało estetycznie i było w podobnym stylu. Naprawiłam też kilka błędów oraz wyczyściłam kod z niepotrzebnych komentarzy lub zmiennych.
 
