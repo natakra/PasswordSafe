@@ -25,9 +25,19 @@ SecDialog::~SecDialog()
 
 void SecDialog::on_logout_clicked()
 {
-    close();
-    Login *w = new Login(this);
-    w->show();
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Logout", "Logout?",QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        close();
+        Login *w = new Login(this);
+        w->show();
+    }
+    //else
+    //{
+        //qDebug() << "Yes was *not* clicked";
+    //}
+
 }
 
 void SecDialog::on_passwordrandom_clicked()
@@ -74,8 +84,6 @@ void SecDialog::on_table()
     qDebug()<<db;
     db.open();
     QSqlQueryModel *model = new QSqlQueryModel();
-
-    //qDebug()<<w.username;
     QSqlQuery *query=new QSqlQuery(db);
 
     query->prepare("select website,email,password from user");
@@ -92,12 +100,7 @@ void SecDialog::on_table()
     }
     ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
-    //qDebug()<<(view->selectionModel()->currentIndex().row());
-    //creating new window to display this database later
-    //accounts *a = new accounts(this);
-    //a->setusernametext(ui->label_username->text());
-    //a->show();
-    //username=ui->label_username->text();
+
 }
 
 void SecDialog::on_pushButton_add_clicked()
@@ -120,6 +123,7 @@ void SecDialog::on_pushButton_add_clicked()
         if(qry.exec())
         {
             QMessageBox::information(this,tr("Your account was added"),tr("Your account was succesfully added."));
+            //row_number+=1;
             get_database(ui->label_username->text()).close();
         }
 
@@ -140,24 +144,11 @@ void SecDialog::on_pushButton_add_clicked()
 void SecDialog::on_pushButton_delete_clicked()
 {
 
-    //auto selectedRowsIndexesList = ui->tableView->selectionModel()->selectedRows();
-    //qDebug()<<selectedRowsIndexesList;
-    //for (int i = 0; i < selectedRowsIndexesList.size(); i++){
-            //qDebug() << selectedRowsIndexesList[i].data().toString();
-
-    //}
     QItemSelectionModel *select = ui->tableView->selectionModel();
-    //qDebug()<<select->selectedRows(0).value(0).data().toString();
-    qDebug()<<select->selectedRows(1).value(0).data().toString();
-    QString web = select->selectedRows(0).value(0).data().toString();
-    QString ema = select->selectedRows(1).value(0).data().toString();
-    //qDebug()<<select->selectedRows(2).value(0).data().toString();
-    //qDebug()<<select->selectedRows(3).value(0).data().toString();
+
     QItemSelectionModel* selectionModel = ui->tableView->selectionModel();
     QModelIndexList selected = selectionModel->selectedRows();
-    //int ind[selected.size()];
     QVector<QString> ind;
-    //QVector<QString> ema;
     for(int i= 0; i< selected.count();i++)
     {
         QModelIndex index = selected.at(i);
@@ -168,14 +159,15 @@ void SecDialog::on_pushButton_delete_clicked()
     {
         qDebug()<<"Something went wrong";
     }
+    qDebug() << ind.size();
     QSqlQuery qry;
     for(int k = 0; k<ind.size();k++)
     {
 
         qDebug()<<ind[k];
         //qDebug() << ind[;
-        //qry.prepare("delete from user where id='"+ind[k]+"'");
-        qry.prepare("delete from user where email='"+ema+"' and website='"+web+"'");
+        qry.prepare("delete from user where id='"+ind[k]+"'");
+        //qry.prepare("delete from user where email='"+ema+"' and website='"+web+"'");
 
         if(qry.exec())
         {
@@ -195,42 +187,21 @@ void SecDialog::on_pushButton_delete_clicked()
 
 void SecDialog::on_tableView_activated(const QModelIndex &index)
 {
-//    QString val = ui->tableView->model()->data(index).toString();
-//    //qDebug()<<(ui->tableView->model()->flags(index)| Qt::ItemIsEditable);
-//    //ui->tableView->setEditTriggers(QAbstractItemView::DoubleClicked);
-//    get_database(ui->label_username->text()).open();
-//    QSqlQuery qry;
-//    qry.prepare("select * from user where id='"+val+"' or website='"+val+"'or email='"+val+"'or password='"+val+"'");
-//    if(qry.exec())
-//    {
-//        qDebug()<<qry.next();
-//        while(qry.next())
-//        {
-//            ui->lineEdit_website->setText(qry.value(1).toString());
-//            ui->lineEdit_email->setText(qry.value(2).toString());
-//            ui->lineEdit_password->setText(qry.value(3).toString());
-//        }
-//        //QMessageBox::information(this,tr("Your account was added"),tr("Your account was succesfully added."));
-//        //ui->lineEdit_website->setText(qry.value(1)).toString());
-//        //get_database(usernametopass).close();
-//    }
 
-//    else
-//    {
-//        QMessageBox::critical(this,tr("Your account couldn't be added"),qry.lastError().text());
-//    }
-//    get_database(ui->label_username->text()).close();
-//    //setusernametext(usernametopass);
-//    //on_table();
     QString val = ui->tableView->model()->data(index).toString();
+    //qDebug()<<val;
     get_database(ui->label_username->text()).open();
     QSqlQuery qry;
+    //id_to_check = qry.value(0).toString();
+    //qDebug()<<id_to_check;
     qry.prepare("select * from user where id='"+val+"' or website='"+val+"' or email='"+val+"' or password='"+val+"'");
     if(qry.exec())
     {
         while(qry.next())
         {
             //ui->lineEdit_website->setText(qry.value(0).toString());
+            //id_to_check = qry.value(0).toString();
+            //qDebug()<<id_to_check;
             ui->lineEdit_website->setText(qry.value(1).toString());
             ui->lineEdit_email->setText(qry.value(2).toString());
             ui->lineEdit_password->setText(qry.value(3).toString());
@@ -240,7 +211,6 @@ void SecDialog::on_tableView_activated(const QModelIndex &index)
     {
         QMessageBox::critical(this,tr("error"),qry.lastError().text());
     }
-
 }
 
 void SecDialog::on_pushButton_clicked()
@@ -258,7 +228,7 @@ void SecDialog::on_pushButton_clicked()
         }
 
         QSqlQuery qry;
-        qry.prepare("update user set website='"+website+"', email='"+email+"', password='"+password+"' where email='"+email+"'");
+        qry.prepare("update user set website='"+website+"', email='"+email+"', password='"+password+"' where id='"+id_to_check+"'");
 
         if(qry.exec())
         {
@@ -273,7 +243,7 @@ void SecDialog::on_pushButton_clicked()
     }
     else
     {
-        QMessageBox::warning(this,"Warning","Nie możesz dodać pustego konta");
+        QMessageBox::warning(this,"Warning","You can't add an empty record.");
     }
     //setusernametext(usernametopass);
     on_table();

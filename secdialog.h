@@ -23,7 +23,7 @@ public:
     void setLabelText(QString str);
     QSqlDatabase get_database(QString str);
     void on_table();
-
+    QString id_to_check = "0";
 
 private slots:
     void on_logout_clicked();
@@ -43,6 +43,7 @@ private slots:
 
 private:
     Ui::SecDialog *ui;
+    int row_number = 0;
 
     //Login *l;
     //QSqlDatabase db = get_database(ui->label_username->text());

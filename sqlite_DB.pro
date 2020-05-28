@@ -25,24 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        accounts.cpp \
         main.cpp \
         login.cpp \
         randompassword.cpp \
+        reminder.cpp \
         secdialog.cpp \
         signin.cpp
 
 HEADERS += \
-        accounts.h \
         login.h \
         randompassword.h \
+        reminder.h \
         secdialog.h \
         signin.h
 
 FORMS += \
-        accounts.ui \
         login.ui \
         randompassword.ui \
+        reminder.ui \
         secdialog.ui \
         signin.ui
 

@@ -12,30 +12,26 @@ Login::Login(QWidget *parent) :
     ui->setupUi(this);
 
     QString gdziejestem= QDir::currentPath();
-    //if (~QDir(gdziejestem+"/users").exists())
-        //QDir().mkdir(gdziejestem+"/users");
+    if (!QDir(gdziejestem+"/users").exists())
+        QDir().mkdir(gdziejestem+"/users");
     QString str = "allusers.db";
-    //QString gdziejestem= QDir::currentPath();
-    //QString path = "/home/nkrauze/sqlite_DB/users/"+str+".db";
+
     QString path = gdziejestem+"/users/"+str;
     mydb = QSqlDatabase::addDatabase("QSQLITE");
-    //mydb.setDatabaseName("/home/nkrauze/sqlite_DB/database.db");
-    //QString path = QDir::currentPath()+"/"+"data.db";
-    qDebug()<<path;
     mydb.setDatabaseName(path);
     mydb.open();
     if(!mydb.open())
-        //ui->label->setText("Failed to open database.");
         QMessageBox::warning(this,"Database","Database failed to connect. Try once again");
-   // else
-        //ui->label->setText("Your database is connected.");
-        //QMessageBox::information(this,"Database","Database was successfully connected.");
+
     QSqlQuery query;
     query.exec("create table users "
               "(id integer primary key, "
               "username varchar(100), "
               "password varchar(100), "
-              "date varchar(128))");
+              "date varchar(128), "
+              "question varchar(128), "
+              "answer varchar(100))");
+    //qDebug()<<query.exec();
 }
 
 Login::~Login()
@@ -74,7 +70,6 @@ void Login::on_pushButton_clicked()
             secDialog->on_table();
         }
         if(count<1)
-            //ui->label->setText("not correct");
             QMessageBox::warning(this,"Login","Your username or password is invalid. Try once again.");
         if(count>1)
             QMessageBox::warning(this,"Login","Your username and password are the same. Try once again.");
@@ -89,4 +84,16 @@ void Login::on_pushButton_2_clicked()
     Signin = new signin(this);
     Signin->show();
 
+}
+
+//void Login::on_label_4_linkActivated(const QString &link)
+//{
+    //qDebug()<<"working!";
+//}
+
+void Login::on_pushButton_3_clicked()
+{
+    hide();
+    reminder = new Reminder(this);
+    reminder->show();
 }

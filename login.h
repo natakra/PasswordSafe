@@ -9,6 +9,7 @@
 
 #include "secdialog.h"
 #include "signin.h"
+#include "reminder.h"
 namespace Ui {
 class Login;
 }
@@ -29,11 +30,16 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    //void on_label_4_linkActivated(const QString &link);
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Login *ui;
     QSqlDatabase mydb;
     SecDialog *secDialog;
     signin *Signin;
+    Reminder *reminder;
 };
 
 #endif // LOGIN_H

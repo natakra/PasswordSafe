@@ -25,7 +25,6 @@ void RandomPassword::on_spinBox_valueChanged(int arg1)
     if (arg1 > 15)
     {
         ui->label_2->setText("STRONG");
-        //ui->label_2->setStyleSheet("{color: #0000FF}");
         ui->label_2->setStyleSheet("QLabel { color : blue; }");
     }
 
@@ -114,7 +113,6 @@ void RandomPassword::on_pushButton_clicked()
 void RandomPassword::on_pushButton_2_clicked()
 {
     int how_many = ui->spinBox_2_number_of_generation->value();
-    //QString file_name = QFileDialog::getOpenFileName(this,"Open a file", QDir::homePath());
     QString file_name = QFileDialog::getSaveFileName(this, tr("Save File"),QDir::homePath());
     QFile file(file_name);
     if (file.open(QIODevice::ReadWrite))
@@ -125,7 +123,6 @@ void RandomPassword::on_pushButton_2_clicked()
             RandomPassword::on_pushButton_generate_clicked();
             stream << ui->lineEdit_show_password->text() << endl;
         }
-        //ui->lineEdit_show_password->setText("The passwords were generated to your file.");
         QMessageBox::information(this,"Passwords saved","Your passwords were saved to: "+file_name);
     }
     else
