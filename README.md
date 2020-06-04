@@ -30,4 +30,17 @@ Do zaimplementowania zostało jeszcze kilka funkcjonalności oraz należy doprac
 
 Od ostatniego raportu dodałam możliwość przypomnienia hasła do swojego konta. Zmieniłam szatę graficzną, aby każde okno wyglądało estetycznie i było w podobnym stylu. Naprawiłam też kilka błędów oraz wyczyściłam kod z niepotrzebnych komentarzy lub zmiennych.
 
+# Raport Finałowy (04.06.2020)
+
+Aplikacja PasswordSafe przedstawia się w następujący sposób:
+
+* Aplikacja umożliwia wielu użytkownikom na korzystanie z aplikacji z własnych kont, które zakładają w aplikacji. 
+* Aplikacja posiada zabezpieczenie podczas zakładania konta w razie potrzeby przypomnienia hasła (odpowiedź na pytanie).
+* Aplikacja pozwala na dodawanie kont do spisu kont po zalogowaniu.
+* Możliwa jest edycja oraz usuwanie niepotrzebnych kont / wpisów.
+* Aplikacja pozwala na generowanie bezpiecznych haseł o różnej długości (maksymalnie 128 znaków). 
+* Wygenerowane hasło można od razu skopiować i dodać do spisu kont, aby zmienić mniej bezpieczne hasła, na trudniejsze do odgadnięcia.
+* Można wygenerować dowolną liczbę haseł (max 100) o zadanej długości w pliku - zapisujemy i nazywamy go jak tylko chcemy. 
+* Po zakończonej pracy wylogowujemy się, aby kolejny użytkownik mógł na tym samym komputerze skorzystać z aplikacji. 
+* Aplikacja nie wymaga połączenia internetowego, gdyż dostęp do haseł powinien być szybki i zawsze dostępny. 
 
